@@ -22,7 +22,6 @@ import br.com.itau.exception.CustomerIdAlreadyExistsException;
 import br.com.itau.exception.FailedException;
 import br.com.itau.junit.utils.TemplateMethod;
 import br.com.itau.model.CustomerAccountBank;
-import br.com.itau.model.CustomerAccountBankTransaction;
 import br.com.itau.repository.CustomerAccountBankRepository;
 import br.com.itau.repository.CustomerRepository;
 import br.com.itau.service.CustomerAccountBankService;
