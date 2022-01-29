@@ -18,6 +18,8 @@ import br.com.itau.repository.CustomerAccountBankRepository;
 import br.com.itau.repository.CustomerAccountBankTransactionRepository;
 import br.com.itau.service.CustomerAccountBankService;
 import br.com.itau.service.CustomerAccountBankTransactionService;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 @Service
 public class CustomerAccountBankTransactionServiceImpl implements CustomerAccountBankTransactionService{
@@ -103,6 +105,10 @@ public class CustomerAccountBankTransactionServiceImpl implements CustomerAccoun
 			customerAccountBankRepository.save(customerAccountBankOri);
 			customerAccountBankTransactionRepository.save(customerAccountBankTransaction);
 		} catch (BusinessRuleException e) {
+			customerAccountBankTransaction.setStatus("KO");
+			customerAccountBankTransaction.setMessage(e.getMessage());
+
+			customerAccountBankTransactionRepository.save(customerAccountBankTransaction);
 			throw e;
 		} catch (Exception e) {
 			customerAccountBankTransaction.setStatus("KO");
@@ -119,7 +125,7 @@ public class CustomerAccountBankTransactionServiceImpl implements CustomerAccoun
 		try {
 
 			List<CustomerAccountBankTransaction> accountsBankTransactions = 
-					(List<CustomerAccountBankTransaction>) customerAccountBankTransactionRepository.findAll();
+					(List<CustomerAccountBankTransaction>) customerAccountBankTransactionRepository.findAll(Sort.by(Direction.DESC, "dtTransferCash"));
 
 //			IntStream.range(0, accountsBankTransactions.size()).forEach( (index) -> {
 //				accountsBankTransactions.get(index).getCustomerAccountBankOri();	
