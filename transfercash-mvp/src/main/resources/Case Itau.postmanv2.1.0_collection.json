@@ -1,0 +1,359 @@
+{
+	"info": {
+		"_postman_id": "8d2c452a-d45a-4a09-b4c2-7677132cfee0",
+		"name": "Case Itau",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cadastrar cliente (id=1)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"customer\": {\r\n            \"idCustomer\":1,\r\n            \"name\":\"Givanildo Dias Mendes\"\r\n        },\r\n        \"idCustomerAccountBank\": 1,\r\n        \"balance\": 40\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/createcustomeraccount",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"createcustomeraccount"
+					]
+				},
+				"description": "Cadastrar cliente e conta corrente"
+			},
+			"response": []
+		},
+		{
+			"name": "Cadastrar cliente (id=2)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"customer\": {\r\n            \"idCustomer\":2,\r\n            \"name\":\"Givanildo Dias Mendes\"\r\n        },\r\n        \"idCustomerAccountBank\": 2,\r\n        \"balance\": 40\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/createcustomeraccount",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"createcustomeraccount"
+					]
+				},
+				"description": "Cadastrar cliente e conta corrente"
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Clientes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/listallcustomeraccount",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"listallcustomeraccount"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BuscarCliente pela conta (id=1)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idCustomerAccountBank\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/customeraccountbyid",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"customeraccountbyid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BuscarCliente pela conta (id=3) conta inexistente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"idCustomerAccountBank\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/customeraccountbyid",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"customeraccountbyid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 20,00",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":20,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":1\r\n\t\t},\r\n        \"idCustomerAccountBank\":1\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":2\r\n\t\t},\r\n        \"idCustomerAccountBank\":2\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 990,00",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":990,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":1\r\n\t\t},\r\n        \"idCustomerAccountBank\":1\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":2\r\n\t\t},\r\n        \"idCustomerAccountBank\":2\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 90 saldo insuficiente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":90,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":1\r\n\t\t},\r\n        \"idCustomerAccountBank\":1\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":2\r\n\t\t},\r\n        \"idCustomerAccountBank\":2\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 1.001,00 Não permitir",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":1001,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":1\r\n\t\t},\r\n        \"idCustomerAccountBank\":1\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":2\r\n\t\t},\r\n        \"idCustomerAccountBank\":2\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 10,00 conta origem inexistente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":10,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":3\r\n\t\t},\r\n        \"idCustomerAccountBank\":3\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":2\r\n\t\t},\r\n        \"idCustomerAccountBank\":2\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trasferir R$ 10,00 conta destino inexistente",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"valueTransferCash\":10,\r\n\t\"customerAccountBankOri\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":1\r\n\t\t},\r\n        \"idCustomerAccountBank\":1\r\n\t},\r\n\t\"customerAccountBankDest\":{\r\n\t\t\"customer\":{\r\n\t\t\t\"idCustomer\":3\r\n\t\t},\r\n        \"idCustomerAccountBank\":3\r\n\t}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/transfercash",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"transfercash"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Transferencias",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/transfer/v1/listalltransactions",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer",
+						"v1",
+						"listalltransactions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
