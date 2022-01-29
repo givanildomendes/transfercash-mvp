@@ -18,6 +18,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 
 import br.com.itau.exception.BusinessRuleException;
 import br.com.itau.exception.FailedException;
@@ -152,7 +154,7 @@ class CustomerAccountBankTransactionControllerTests extends TemplateMethod{
 
 		try {
 			customerAccountBankTransactionService.getAllCustomerAccountBankTransaction();
-			Mockito.verify(customerAccountBankTransactionRepository).findAll();
+			Mockito.verify(customerAccountBankTransactionRepository).findAll(Sort.by(Direction.DESC, "dtTransferCash"));
 		} catch (FailedException e) {
 			fail("Ocorreu um problema inesperado." + e);
 		}
