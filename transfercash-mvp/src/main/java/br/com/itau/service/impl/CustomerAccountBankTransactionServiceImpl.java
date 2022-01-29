@@ -1,7 +1,10 @@
 package br.com.itau.service.impl;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -84,12 +87,21 @@ public class CustomerAccountBankTransactionServiceImpl implements CustomerAccoun
 			if ( customerAccountBankTransaction.getValueTransferCash().doubleValue() <= 0 ) {
 				throw new BusinessRuleException("Operação não permitida!!! Valor deve ser maior que 0.");
 			}
-			
+
 			//Nao permite transferencia acima de R$ 1.000,00
 			if ( customerAccountBankTransaction.getValueTransferCash().doubleValue() > 1000 ) {
 				throw new BusinessRuleException("Operação não permitida!!! Ultrapassou o limite permitido de transferência de R$ 1.000,00.");
 			}
 
+			double totalTransationToday =  getTotalTransactionToday();
+			//Nao permite transferencia acima de R$ 1.000,00
+			if ( (customerAccountBankTransaction.getValueTransferCash().doubleValue() + totalTransationToday) > 1000 ) {
+				throw new BusinessRuleException("Operação não permitida!!! Hoje já foi transferido "+totalTransationToday+"."
+						+ 	"Logo, "+totalTransationToday+" + "+customerAccountBankTransaction.getValueTransferCash().doubleValue()
+						+	"  ultrapassa o limite permitido de transferência de R$ 1.000,00.");
+			}
+
+			
 			if ( customerAccountBankTransaction.getCustomerAccountBankOri().getBalance().doubleValue() <  customerAccountBankTransaction.getValueTransferCash().doubleValue()) {
 				throw new BusinessRuleException(
 						"Saldo "+customerAccountBankTransaction.getCustomerAccountBankOri().getBalance()+
@@ -136,6 +148,22 @@ public class CustomerAccountBankTransactionServiceImpl implements CustomerAccoun
 		} catch (Exception e) {
 			throw new FailedException("Ocorreu um erro inesperado ao listar as transações de transferência.", e);
 		} 
+	}
+
+	private synchronized double getTotalTransactionToday() {
+		
+		LocalDateTime ini = LocalDateTime.of(LocalDate.now(), LocalTime.of(0, 0, 0, 0));
+		LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.of(23, 59, 59, 999));
+		
+		List<CustomerAccountBankTransaction> transactionsList = 
+				(List<CustomerAccountBankTransaction>) customerAccountBankTransactionRepository.getSumTransactionsByAccountBankOriAndDay(1L, ini, end);
+		
+		
+		double total = transactionsList.stream()
+				.filter(e -> e.getStatus().equalsIgnoreCase("OK") )
+				.mapToDouble(p -> p.getValueTransferCash().doubleValue())
+				.sum();
+		return total;
 	}
 
 }
