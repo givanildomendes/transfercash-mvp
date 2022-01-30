@@ -45,13 +45,16 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 
 	private TestRestTemplate testRestTemplate;
 
-	private CustomerAccountBank customerAccountBank;
+	private CustomerAccountBank customerAccountBank1;
+	private CustomerAccountBank customerAccountBank2;
 
 	public CustomerAccountBankControllerTests(){
 		this.restTemplateBuilder = new RestTemplateBuilder();
 		this.testRestTemplate = new TestRestTemplate(restTemplateBuilder);
 
-		this.customerAccountBank = getCustomerAccountBankVO();
+		this.customerAccountBank1 = getCustomerAccountBankVO(1, "Jose",  1, "40");
+		this.customerAccountBank2 = getCustomerAccountBankVO(2, "Maria", 2, "40");
+		
 	}
 	
 	@Test
@@ -59,8 +62,12 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void cadastrarClienteComSucesso() {
 		final String URL_CUSTOMERACCOUNT = http+host+":"+port+contextGeneral + contextCustomerAccount;
 		
-		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank,String.class);
-		assertEquals( response.getStatusCode(),  HttpStatus.OK );
+		ResponseEntity<String> response1 = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank1,String.class);
+		ResponseEntity<String> response2 = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank2,String.class);
+
+		assertEquals( response1.getStatusCode(),  HttpStatus.OK );
+		assertEquals( response2.getStatusCode(),  HttpStatus.OK );
+
 	}
 
 	@Test
@@ -68,9 +75,9 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void cadastrarClienteComErroIdDoClienteJaExistente() {
 		final String URL_CUSTOMERACCOUNT = http+host+":"+port+contextGeneral + contextCustomerAccount;
 
-		customerAccountBank.setIdCustomerAccountBank(2);
+		customerAccountBank1.setIdCustomerAccountBank(2);
 		
-		ResponseEntity<String> responseNext = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank,String.class);
+		ResponseEntity<String> responseNext = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank1,String.class);
 		assertEquals( responseNext.getStatusCode(),  HttpStatus.INTERNAL_SERVER_ERROR );
 	}
 
@@ -79,9 +86,9 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void cadastrarClienteComErroNumeroDaContaJaExistente() {
 		final String URL_CUSTOMERACCOUNT = http+host+":"+port+contextGeneral + contextCustomerAccount;
 
-		customerAccountBank.getCustomer().setIdCustomer(2);
+		customerAccountBank1.getCustomer().setIdCustomer(2);
 		
-		ResponseEntity<String> responseNext = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank,String.class);
+		ResponseEntity<String> responseNext = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank1,String.class);
 		assertEquals( responseNext.getStatusCode(),  HttpStatus.INTERNAL_SERVER_ERROR );
 	}
 
@@ -99,9 +106,9 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void cadastrarClienteComErroOndeIdCustomerAccountBankMenorIgualZero() {
 		final String URL_CUSTOMERACCOUNT = http+host+":"+port+contextGeneral + contextCustomerAccount;
 
-		customerAccountBank.setIdCustomerAccountBank(0);//
+		customerAccountBank1.setIdCustomerAccountBank(0);//
 		
-		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank,String.class);
+		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank1,String.class);
 		assertEquals( response.getStatusCode(),  HttpStatus.INTERNAL_SERVER_ERROR );
 	}
 
@@ -110,9 +117,9 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void cadastrarClienteComErroOndeIdCustomerMenorIgualZero() {
 		final String URL_CUSTOMERACCOUNT = http+host+":"+port+contextGeneral + contextCustomerAccount;
 
-		customerAccountBank.getCustomer().setIdCustomer(0);
+		customerAccountBank1.getCustomer().setIdCustomer(0);
 		
-		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank,String.class);
+		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT, customerAccountBank1,String.class);
 		assertEquals( response.getStatusCode(),  HttpStatus.INTERNAL_SERVER_ERROR );
 	}
 
@@ -121,7 +128,7 @@ class CustomerAccountBankControllerTests extends TemplateMethod{
 	void listarClientePeloNumeroDaContaComSucesso() {
 		final String URL_CUSTOMERACCOUNT_BY_ID = http+host+":"+port+contextGeneral + contextCustomerAccountById;
 
-		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT_BY_ID, customerAccountBank,String.class);
+		ResponseEntity<String> response = testRestTemplate.postForEntity(URL_CUSTOMERACCOUNT_BY_ID, customerAccountBank1,String.class);
 		assertEquals( response.getStatusCode(),  HttpStatus.OK );
 	}
 	
